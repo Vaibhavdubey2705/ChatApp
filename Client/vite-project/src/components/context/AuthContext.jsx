@@ -57,6 +57,13 @@ export const AuthContextProvider = ({ children }) => {
           localStorage.setItem("User", JSON.stringify(response));
           setUser(response);
     }, [registerInfo])
+
+
+    const logoutUser = useCallback(() =>{
+      localStorage.removeItem("User");
+      setUser(null);
+    },[])
+
     //whatever we will return is a component provided by the AuthContext object
     return <AuthContext.Provider 
       // This value is accessible in child , here we have child as our APP as we have wrapped it inside our AuthContextProvider.
@@ -71,6 +78,7 @@ export const AuthContextProvider = ({ children }) => {
         registerUser,
         registerError,
         isRegisterLoading,
+        logoutUser                      //use in navbar to logout user
       }} >
 
          {/* in here we are supposed to pass all other components that will be making use of our authcontext data
