@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+body{
+    /* font family of nunito with fallback of sans-serif so that it is used if nunito is not used */
+    color: white;
+    font-family: "Nunito", sans-serif;
+    background-color: rgb(40,40,40);
+}
