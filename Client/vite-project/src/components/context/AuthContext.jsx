@@ -19,8 +19,13 @@ export const AuthContextProvider = ({ children }) => {
       password: "" 
     });
     
-    //this state is for rendering the error when registering a user (lect 5, related to services.js)
-    //Checking if it's working
+    const [loginInfo, setLoginInfo] = useState({
+      email: "",
+      password: "", 
+    });
+    const [loginError, setLoginError] = useState(null);
+    const [isLoginLoading, setIsLoginLoading] = useState(false);
+
     console.log("Userr", user);
    
     useEffect(() => {
@@ -37,9 +42,13 @@ export const AuthContextProvider = ({ children }) => {
       //now we can pass this function through our provider
     }, []);
 
+    const updateLoginInfo = useCallback((info) =>{
+      setLoginInfo(info);
+    }, []);
+
+
     //now we will create a function to register a user (lec 5), we will now perform post request just by calling
     //postRequest from services.js and passing all the necessary things
-
     const registerUser = useCallback(async(e)=> {
       e.preventDefault();
       setIsRegisterLoading(true);  //it means that registration process is going on
@@ -58,6 +67,21 @@ export const AuthContextProvider = ({ children }) => {
           setUser(response);
     }, [registerInfo])
 
+
+    //Function for login 
+    const loginUser = useCallback(async (e) =>{
+      e.preventDefault()
+      setIsLoginLoading(true)
+      setLoginError(null);
+      const response = await postRequest( `${baseUrl}/users/login`, 
+        JSON.stringify(registerInfo));
+      
+      setIsLoginLoading(false);
+      if(response.error){
+         return setLoginError(response);
+      }  
+      localStorage.setItem("User", JSON.stringify(response));
+    }, [loginInfo])
 
     const logoutUser = useCallback(() =>{
       localStorage.removeItem("User");
@@ -78,7 +102,12 @@ export const AuthContextProvider = ({ children }) => {
         registerUser,
         registerError,
         isRegisterLoading,
-        logoutUser                      //use in navbar to logout user
+        logoutUser,                      //use in navbar to logout user
+        loginUser,
+        loginError,
+        loginInfo,
+        updateLoginInfo,
+        isLoginLoading
       }} >
 
          {/* in here we are supposed to pass all other components that will be making use of our authcontext data
