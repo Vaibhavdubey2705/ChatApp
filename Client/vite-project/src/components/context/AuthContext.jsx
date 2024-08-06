@@ -66,59 +66,32 @@ export const AuthContextProvider = ({ children }) => {
           localStorage.setItem("User", JSON.stringify(response));
           setUser(response);
     }, [registerInfo])
-<<<<<<< HEAD
-    //Function for login 
-    const loginUser = useCallback(async (e) =>{
-      e.preventDefault()
-      setIsLoginLoading(true)
-      setLoginError(null);
-      const response = await postRequest( `${baseUrl}/users/login`, 
-        JSON.stringify(registerInfo));
-      
-      setIsLoginLoading(false);
-      if(response.error){
-         return setLoginError(response);
-      }  
-      localStorage.setItem("User", JSON.stringify(response));
-    }, [loginInfo])
 
     const logoutUser = useCallback(() =>{
       localStorage.removeItem("User");
       setUser(null);
-    },[])
-
-=======
->>>>>>> parent of 793a723 (Regiter Setup Done Successfully)
+    })
     //whatever we will return is a component provided by the AuthContext object
-    return <AuthContext.Provider >
-      // This value is accessible in child , here we have child as our APP as we have wrapped it inside our AuthContextProvider.
-      //we have set the value as an object user so that we can extract multiple values from here , this value will be accessible
-      //in child components , child is app and because have contain login, register and chat pages therefore this value
-      //can also be accessible in them
-
-      value={{                    //ye saari values child components use kr payenge 
-        user,  
-        registerInfo, 
-        updateRegisterInfo,
-        registerUser,
-        registerError,
-        isRegisterLoading,
-<<<<<<< HEAD
-
-      }} 
-=======
-      }} >
->>>>>>> parent of 793a723 (Regiter Setup Done Successfully)
-
-         {/* in here we are supposed to pass all other components that will be making use of our authcontext data
-         and to get those components we'll be getting them through props, so we will be having
-         children prop i.e, components that are the child og this particular component */}
-         {children}
-
-         {/* now how do we pass data to this child component, for this we we can include some piece of
-         state here  */}
-    </AuthContext.Provider>
-}
+    return (
+      <AuthContext.Provider
+        value={{
+          user,
+          registerInfo,
+          updateRegisterInfo,
+          registerUser,
+          logoutUser,
+          registerError,
+          isRegisterLoading,
+          loginInfo,
+          updateLoginInfo,
+          loginError,
+          isLoginLoading
+        }}
+      >
+        {children}
+      </AuthContext.Provider>
+    );
+  };
 
 // Purpose:
 // The purpose of the provided JSX file is to create an authentication context using React's Context API.
