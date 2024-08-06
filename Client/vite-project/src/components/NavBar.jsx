@@ -3,7 +3,7 @@ import { Container, Nav, Navbar, Stack, Button } from "react-bootstrap";
 import { useContext } from "react"
 import { AuthContext } from "./context/AuthContext"
 const NavBar = () => {
-  const {user, logoutUser} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="mb-4" style={{ height: "3.75rem" }}>
       <Container>
@@ -16,19 +16,14 @@ const NavBar = () => {
           <Nav className="ms-auto">
             <Stack direction="horizontal" gap={3}>
               {
-                user && (
-                  <>
-                    <Link to="/login" className="nav-link" onClick={() =>logoutUser()}>Logout</Link>
-                  </>
-                )
+                user && (()=> <Link to="/register" className="nav-link">Logout</Link>)
               }
               {
-                !user && (
-                  <> <Link to="/register" className="nav-link">Register</Link>
-                    <Link to="/login" className="nav-link">Login</Link>
-                  </>
-                )
+                !user 
               }
+              <Link to="/register" className="nav-link">Register</Link>
+              <Link to="/login" className="nav-link">Login</Link>
+              <Button variant="outline-light" className="ms-2">Contact Us</Button>
             </Stack>
           </Nav>
         </Navbar.Collapse>

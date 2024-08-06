@@ -20,6 +20,6 @@ const userModel = mongoose.model("User", userSchema) //first parameter is the na
 //mongoose automatically turns it to plural form therefore we will have a collection called Users
 
 //Now we have to export our model so that we can use it to enter data in our database
-module.exports=userModel;
+module.exports = userModel;
 
-//now go ahead and create a userRoute
+//now go ahead and create a userRoute 

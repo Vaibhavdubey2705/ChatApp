@@ -66,8 +66,6 @@ export const AuthContextProvider = ({ children }) => {
           localStorage.setItem("User", JSON.stringify(response));
           setUser(response);
     }, [registerInfo])
-
-
     //Function for login 
     const loginUser = useCallback(async (e) =>{
       e.preventDefault()
@@ -89,7 +87,7 @@ export const AuthContextProvider = ({ children }) => {
     },[])
 
     //whatever we will return is a component provided by the AuthContext object
-    return <AuthContext.Provider 
+    return <AuthContext.Provider >
       // This value is accessible in child , here we have child as our APP as we have wrapped it inside our AuthContextProvider.
       //we have set the value as an object user so that we can extract multiple values from here , this value will be accessible
       //in child components , child is app and because have contain login, register and chat pages therefore this value
@@ -102,13 +100,8 @@ export const AuthContextProvider = ({ children }) => {
         registerUser,
         registerError,
         isRegisterLoading,
-        logoutUser,                      //use in navbar to logout user
-        loginUser,
-        loginError,
-        loginInfo,
-        updateLoginInfo,
-        isLoginLoading
-      }} >
+
+      }} 
 
          {/* in here we are supposed to pass all other components that will be making use of our authcontext data
          and to get those components we'll be getting them through props, so we will be having
