@@ -12,15 +12,9 @@ const NavBar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <span className="text-warning">Loggen in as {user?.name}</span>
+          <span className="text-warning">Loggen in as {user.name}</span>
           <Nav className="ms-auto">
             <Stack direction="horizontal" gap={3}>
-              {
-                user && (()=> <Link to="/register" className="nav-link">Logout</Link>)
-              }
-              {
-                !user 
-              }
               <Link to="/register" className="nav-link">Register</Link>
               <Link to="/login" className="nav-link">Login</Link>
               <Button variant="outline-light" className="ms-2">Contact Us</Button>

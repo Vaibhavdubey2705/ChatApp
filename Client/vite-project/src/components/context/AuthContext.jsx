@@ -66,6 +66,7 @@ export const AuthContextProvider = ({ children }) => {
           localStorage.setItem("User", JSON.stringify(response));
           setUser(response);
     }, [registerInfo])
+<<<<<<< HEAD
     //Function for login 
     const loginUser = useCallback(async (e) =>{
       e.preventDefault()
@@ -86,6 +87,8 @@ export const AuthContextProvider = ({ children }) => {
       setUser(null);
     },[])
 
+=======
+>>>>>>> parent of 793a723 (Regiter Setup Done Successfully)
     //whatever we will return is a component provided by the AuthContext object
     return <AuthContext.Provider >
       // This value is accessible in child , here we have child as our APP as we have wrapped it inside our AuthContextProvider.
@@ -100,8 +103,12 @@ export const AuthContextProvider = ({ children }) => {
         registerUser,
         registerError,
         isRegisterLoading,
+<<<<<<< HEAD
 
       }} 
+=======
+      }} >
+>>>>>>> parent of 793a723 (Regiter Setup Done Successfully)
 
          {/* in here we are supposed to pass all other components that will be making use of our authcontext data
          and to get those components we'll be getting them through props, so we will be having
