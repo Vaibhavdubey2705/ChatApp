@@ -6,7 +6,7 @@ export const baseUrl = "http://localhost:5000/api"           //The export keywor
 //so this is the base url for our backend apis, and it's good to set it here at one point so that whenever we want to
 //change it , we can easily do so
 export const postRequest = async(url, body) => {
-    console.log("body". body);
+    console.log("body", body);
     const response = await fetch(url, {
         method : "POST" ,
         //this represents that we are working with the json data

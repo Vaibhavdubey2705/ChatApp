@@ -7,26 +7,21 @@ export const AuthContext = createContext();
 
 //provider component containing our data
 export const AuthContextProvider = ({ children }) => {
-    //state for if we successfull register a user
-    const [user,setUser] = useState(null);
-    //state for rendering the error while registering a user(lec 5)
-    const [registerError, setRegisterError] = useState(null);
-    //also add some loading status here (lec 5)
-    const [isRegisterLoading, setIsRegisterLoading] = useState(false);
+    const [user,setUser] = useState(null);                                      //state for if we successfull register a user
+    const [registerError, setRegisterError] = useState(null);              //state for rendering the error while registering a user(lec 5)
+    const [isRegisterLoading, setIsRegisterLoading] = useState(false);     //also add some loading status here (lec 5)
     const [registerInfo, setRegisterInfo] = useState({
       name : "",
       email: "",
       password: "" 
     });
-    
+    console.log("registerInfo", registerInfo);
     const [loginInfo, setLoginInfo] = useState({
       email: "",
       password: "", 
     });
     const [loginError, setLoginError] = useState(null);
     const [isLoginLoading, setIsLoginLoading] = useState(false);
-
-    console.log("Userr", user);
    
     useEffect(() => {
       const storedUser = localStorage.getItem("User");
@@ -34,13 +29,14 @@ export const AuthContextProvider = ({ children }) => {
         setUser(JSON.parse(storedUser));
       }
     }, []);
+    console.log("Userr", user);
+    console.log("LoginInfo", loginInfo);
+
+
+    const updateRegisterInfo = useCallback((info) =>{                                    //Info represents the data that we input through the form, and this is a Arrow function
+      setRegisterInfo( info);                                                            //we will call this setRegisterInfo right here and update our register infon using this info
+    }, []);                                                                               //now we can pass this function through our provider
     
-    //Info represents the data that we input through the form, and this is a Arrow function
-    const updateRegisterInfo = useCallback((info) =>{
-      //we will call this setRegisterInfo right here and update our register infon using this info
-      setRegisterInfo( info);
-      //now we can pass this function through our provider
-    }, []);
 
     const updateLoginInfo = useCallback((info) =>{
       setLoginInfo(info);
@@ -50,20 +46,16 @@ export const AuthContextProvider = ({ children }) => {
     //now we will create a function to register a user (lec 5), we will now perform post request just by calling
     //postRequest from services.js and passing all the necessary things
     const registerUser = useCallback(async(e)=> {
+      console.log("form submitted")
       e.preventDefault();
-      setIsRegisterLoading(true);  //it means that registration process is going on
-      setRegisterError(null);      //it means initially no error is there
-      //the first parameter is url and it will hit our Register API endpoint and the second argument is a JSON
-      //object which will be now our body, so right here we will convert login info and register info to adjacent
-      //object using json.stringify and pass registerInfo in it
-       const response = await postRequest( `${baseUrl}/users/register`, JSON.stringify(registerInfo))
+      setIsRegisterLoading(true);                //it means that registration process is going on
+      setRegisterError(null);                    //it means initially no error is there   
+       const response = await postRequest( `${baseUrl}/users/register`, JSON.stringify(registerInfo))                //the first parameter is url and it will hit our Register API endpoint and the second argument is a JSON object which will be now our body, so right here we will convert login info and register info to adjacent object using json.stringify and pass registerInfo in it
        setIsRegisterLoading(false);
           if(response.error){
             return setRegisterError(response);
           }
-          //agr error nhi mila toh user ko local storage mein save krwa diya, the first parameter is the key
-          //let it be User and the second one is JSON objevt
-          localStorage.setItem("User", JSON.stringify(response));
+          localStorage.setItem("User", JSON.stringify(response));                  //agr error nhi mila toh user ko local storage mein save krwa diya, the first parameter is the key let it be User and the second one is JSON objevt
           setUser(response);
     }, [registerInfo])
 
@@ -71,6 +63,22 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.removeItem("User");
       setUser(null);
     })
+     
+    const loginUser = useCallback(async(e) =>{
+       e.preventDefault();
+       setIsLoginLoading(true);
+       setLoginError(null);
+       const response = await postRequest(
+        `${baseUrl}/users/login`, JSON.stringify(loginInfo)
+       );
+       
+       if(response.error)
+         return setLoginError(response)
+       
+       localStorage.setItem("User", JSON.stringify(response))
+       setUser(response);
+    }, [loginInfo]);
+
     //whatever we will return is a component provided by the AuthContext object
     return (
       <AuthContext.Provider
@@ -82,6 +90,7 @@ export const AuthContextProvider = ({ children }) => {
           logoutUser,
           registerError,
           isRegisterLoading,
+          loginUser,
           loginInfo,
           updateLoginInfo,
           loginError,
