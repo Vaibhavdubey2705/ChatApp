@@ -16,6 +16,8 @@ export const AuthContextProvider = ({ children }) => {
       password: "" 
     });
     console.log("registerInfo", registerInfo);
+
+    
     const [loginInfo, setLoginInfo] = useState({
       email: "",
       password: "", 

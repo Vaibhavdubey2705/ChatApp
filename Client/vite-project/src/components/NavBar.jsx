@@ -27,7 +27,6 @@ const NavBar = () => {
                   </>
                 )
               }
-             
             </Stack>
           </Nav>
         </Navbar.Collapse>

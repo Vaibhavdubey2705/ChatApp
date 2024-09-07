@@ -9,7 +9,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 //importing our user route
 const userRoute = require("./routes/userRoute");
-
+const chatRoute  = require("./routes/chatRoute");
+const messageRoute  = require("./routes/messageRoute");
 const app=express();
 
 
@@ -25,6 +26,8 @@ app.use(express.json());
 //the frontend and backend of a web application.
 app.use(cors());
 app.use("/api/users" , userRoute);
+app.use("/api/chats" , chatRoute);
+app.use("/api/messages" , messageRoute);
  
 //3. CONNECTING TO MONGODB DATABASE
 

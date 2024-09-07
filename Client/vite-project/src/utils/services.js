@@ -42,3 +42,25 @@ export const postRequest = async(url, body) => {
     //if there is no error we will not go inside if part and the data is returned
     return data;
 }
+
+export const getRequest = async (url) => {
+    try {
+        const response = await fetch(url);
+
+        // Check if response is OK (status in range 200-299)
+        if (!response.ok) {
+            // Response may not be JSON; handle accordingly
+            const errorText = await response.text();
+            return { error: true, message: `HTTP error! Status: ${response.status}`, details: errorText };
+        }
+
+        // Attempt to parse JSON
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        // Catch network errors or JSON parsing errors
+        console.error('Error fetching data:', error);
+        return { error: true, message: error.message };
+    }
+};

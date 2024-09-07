@@ -83,18 +83,16 @@ const findUser = async (req,res) =>{
     }
 }
 //CONTROLLER FOR FINDING ALL USER
-const Users = async (req,res) =>{
-    try{
-        //DIRECT SAARE USERS LE LIYE , SIMPLE HAI KUCH NHI CHAHIYE HAME URL SE AUR SIRF FIND FUNCTION USE HOGA
-        const user = await userModel.find(userId);
-        res.status(200).json(user);
-    }catch(error)
-    {
-        console.log(error);
-        res.status(500).json(error);
-    }
-}
+const getUsers = async (req, res) => {
+  try {
+    const users = await userModel.find(); // Correct: find all users, no parameters
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
 
 //When you use curly braces {} around the exported value { registeredUser }, it means you are exporting an 
 //object with a property named registeredUser, and its value is the function registeredUser that you defined earlier.
-module.exports = { registeredUser , loginUser, findUser, Users};
+module.exports = { registeredUser , loginUser, findUser, getUsers};

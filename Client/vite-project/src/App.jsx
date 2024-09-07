@@ -16,11 +16,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container} from "react-bootstrap"
 import { useContext } from "react"
 import { AuthContext } from "./components/context/AuthContext"
+import { ChatContextProvider } from "./components/context/chatContext"
 
 function App() {
   const {user} = useContext(AuthContext);
   return (
-    <>
+    //ye prop pass ho jayega chatContext mein, children toh apne aap app ban hi jta hai 
+    <ChatContextProvider user = {user}>               
      <NavBar />
      <Container className="text-secondary">
      <Routes>
@@ -30,7 +32,7 @@ function App() {
       <Route path="*" element={<Navigate to="/" />} />
       </Routes>
      </Container>
-    </>
+    </ChatContextProvider>
 
   );
 }
