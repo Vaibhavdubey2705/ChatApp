@@ -1,52 +1,69 @@
 # Real-time Chat Application
 
-This is a real-time chat application built using **Node.js**, **Express**, **MongoDB**, and **React**. The application allows users to sign up, log in, and engage in real-time chat with other users. The chat history is stored and can be accessed by users later. The project is still under development and is currently 70% complete.
+This is a real-time chat application built using **Node.js**, **Express**, **MongoDB**, and **React**. The application allows users to sign up, log in, create chats, and send real-time messages to other users. The chat history is stored in the database and can be accessed later. The project is currently 70% complete.
 
 ## Features
 
-- **User Authentication**: Sign up, log in, and user management using **JWT** (JSON Web Tokens).
-- **Real-time Messaging**: Send and receive messages in real-time using **WebSocket**.
-- **Chat Management**: Users can create chats and view chats with potential users.
+- **User Authentication**: Sign up, log in, and manage users using **JWT (JSON Web Tokens)**.
+- **Real-time Messaging**: Send and receive messages in real-time using **Socket.io**.
+- **Chat Creation**: Users can create new chats with other registered users.
 - **Message History**: Messages are stored and can be retrieved by users at any time.
+- **Context Providers**: State management using **React Context API** for authentication and chat data.
 
 ## Backend
 
-The backend of this chat application is powered by **Node.js**, **Express**, and **MongoDB**. It includes the following routes:
+The backend is powered by **Node.js**, **Express**, and **MongoDB**. The following RESTful routes are available:
 
 ### Routes
 
-1. **User Route (`/api/user`)**
-   - User Registration
-   - User Login
-   - Find a specific user by ID
-   - Find all users
+1. **User Routes (`/api/users`)**
+   - **POST /register**: Register a new user.
+   - **POST /login**: Log in an existing user.
+   - **GET /**: Retrieve all registered users.
+   - **GET /:userId**: Find a specific user by ID.
 
-2. **Chat Route (`/api/chat`)**
-   - Create a new chat between users
-   - Get all chats for a user
+2. **Chat Routes (`/api/chats`)**
+   - **POST /**: Create a new chat between users.
+   - **GET /:userId**: Get all chats for a specific user.
+   - **GET /find/:firstId/:secondId**: Retrieve a specific chat between two users.
 
-3. **Message Route (`/api/message`)**
-   - Send a new message in a chat
-   - Get all messages in a chat
+3. **Message Routes (`/api/messages`)**
+   - **POST /**: Send a new message in a chat.
+   - **GET /:chatId**: Retrieve all messages from a specific chat.
+
+### Backend Technologies:
+- **Node.js**: Server-side JavaScript runtime.
+- **Express**: Web framework for building APIs.
+- **MongoDB**: NoSQL database to store user data, chats, and messages.
+- **JWT**: JSON Web Tokens for user authentication.
+- **Socket.io**: Real-time communication between clients and the server.
 
 ## Frontend
 
-The frontend is built using **React** with the help of **Context API** to manage global state:
+The frontend is built using **React** and uses the **Context API** for state management. It contains two context providers:
 
-- **authContext**: Handles user authentication status, login, and logout.
-- **chatContext**: Manages the chat data, including the list of chats and messages.
+- **authContext**: Manages user authentication (login, registration, and session management).
+- **chatContext**: Manages chat creation, chat data, and real-time messages.
 
-After a user logs in, they can see their profile and a list of chats with other users. Users can also start new chats and exchange messages in real-time.
+### Frontend Structure:
 
-## Technologies Used
+- **AuthContext**:
+  - Manages user registration, login, and logout.
+  - Persists user data in localStorage.
+  - Provides global authentication state.
 
-### Backend:
-- **Node.js**: Server-side runtime.
-- **Express**: Web framework for routing.
-- **MongoDB**: Database to store users, chats, and messages.
-- **JWT**: For user authentication and session management.
+- **ChatContext**:
+  - Manages chat creation and retrieval.
+  - Handles real-time message fetching and updates.
 
-### Frontend:
-- **React**: For building user interfaces.
-- **Context API**: For managing global state.
-- **Socket.io**: For real-time communication between users.
+### Frontend Technologies:
+- **React**: For building interactive user interfaces.
+- **Context API**: For global state management.
+- **Socket.io**: For real-time messaging.
+- **CSS Modules**: For component-based styling.
+
+## Installation and Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo-url/chat-app.git
