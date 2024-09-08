@@ -1,4 +1,4 @@
-Real-time Chat Application
+#Real-time Chat Application
 This is a real-time chat application built using Node.js, Express, MongoDB, and React. The application allows users to sign up, log in, and engage in real-time chat with other users. The chat history is stored and can be accessed by users later. The project is still under development and is currently 70% complete.
 
 Features
