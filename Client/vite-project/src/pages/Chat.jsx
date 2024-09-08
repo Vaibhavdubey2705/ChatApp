@@ -10,7 +10,7 @@ const Chat = () => {
   const {user} = useContext(AuthContext);
     const {userChats,
       isUserChatsLoading,
-      userChatsError
+      updateCurrentChat
     } = useContext(ChatContext);
     console.log("UserChats", userChats);
   
@@ -23,7 +23,7 @@ const Chat = () => {
              {isUserChatsLoading && <p>Loading Chats...</p>}
              {userChats ?. map((chat, index) =>{                    //UserChat ek array of messages hai between two individuals , map ek ek karke line by line chats uthayega aur unki id leke har baar naya div banayega
                return(
-                 <div key = {index}>
+                 <div key = {index} onClick={() => updateCurrentChat(chat)}>
                     <UserChat  chat = {chat} user = {user}/>         {/*userChat componenet mein hamne chat bheji aur user bheja current , userChat mein ye as a prop recieve hue aur fir wahan se ye prop bheji hook ke pass jo recipient user search krega database mein aur return krega */}
                  </div>
                )

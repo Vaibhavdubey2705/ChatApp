@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { baseUrl, getRequest, postRequest } from "../../utils/services";
 
 export const ChatContext = createContext();
@@ -9,7 +9,12 @@ export const ChatContextProvider = ({children, user}) =>{      //isme children k
     const [isUserChatsLoading, setIsUserChatsLoading] = useState(false);
     const [userChatsError, setuserChatsError] = useState(null);
     const [potentialChats, setPotentialChats] = useState([]);
-
+    const [currentChat, setCurrentChat] = useState(null);
+    const [messages, setMessages] = useState(null);
+    const [ismessagesLoading, setMessagesLoading] = useState(null);
+    const [messagesError, setMessagesError] = useState(null);
+    
+    console.log("messages", messages);
     useEffect(() => {
       const getUsers = async () => {
         const response = await getRequest(`${baseUrl}/users`);
@@ -59,12 +64,57 @@ export const ChatContextProvider = ({children, user}) =>{      //isme children k
   
   }, [user]); // Ensure user is correctly passed to the component
   
+
+  useEffect(() => {
+    const getMessages = async () => {
+        setMessagesLoading(true);
+        setMessagesError(null);
+      
+        const response = await getRequest(`${baseUrl}/messages/${currentChat?._id}`);      //chatRoute mein findUserChats ko request bhejenge aur wahan se response aayega 
+
+        setMessagesLoading(false);
+
+        if (response.error) {
+            return setMessagesError(response);
+        }
+
+        setMessages(response);
+    };
+
+    getMessages(); 
+
+}, [currentChat]);      //whenever our current chat changes we will be able to show our messages to console
+
+
+
+
+
+    const updateCurrentChat = useCallback((chat) =>{
+      setCurrentChat(chat);
+    },[])
+
+    const createChat = useCallback(async (firstId, secondId) =>{
+      const response = await postRequest(
+        `${baseUrl}/chats`, 
+        JSON.stringify({
+          firstId,
+          secondId
+        })
+      );
+      if(response.error){
+        return console.log("Error Creating chat", response);
+      }
+
+      setUserChats((prev) => [...prev, response]);
+    }, []);
     return <ChatContext.Provider 
       value = {{
         userChats,                   //user ki chats jis jis se hain
         isUserChatsLoading,
         userChatsError,
         potentialChats,
+        createChat,
+        updateCurrentChat
       }}
     >{children}</ChatContext.Provider>
 }
