@@ -1,9 +1,11 @@
 import { Stack } from "react-bootstrap";
 import { useFetchRecipientUser } from "../../hooks/useFetchRecipient";
 import avatar from "../../assets/images/avatar.svg"
+import { useContext } from "react";
 const UserChat = ({chat, user }) =>{
 
     const {recipientUser} = useFetchRecipientUser(chat, user)
+    const {onlineUsers} = useContext(chatContext);
     return (
         <Stack direction = "horizontal" gap = {3} className="user-card align-items-center p-2 justify-content-between" role="button">
             <div className="d-flex">
