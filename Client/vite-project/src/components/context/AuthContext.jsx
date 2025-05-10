@@ -25,14 +25,13 @@ export const AuthContextProvider = ({ children }) => {
     const [loginError, setLoginError] = useState(null);
     const [isLoginLoading, setIsLoginLoading] = useState(false);
    
+    //local storage mein jo current user hai usko fetch karke user mein store karwa diya
     useEffect(() => {
       const storedUser = localStorage.getItem("User");
       if (storedUser) {
-        setUser(JSON.parse(storedUser));
+        setUser(JSON.parse(storedUser));    //wapas javascript object mein convert kr diya , because response should be in js object
       }
     }, []);
-    console.log("Userr", user);
-    console.log("LoginInfo", loginInfo);
 
 
     const updateRegisterInfo = useCallback((info) =>{                                    //Info represents the data that we input through the form, and this is a Arrow function

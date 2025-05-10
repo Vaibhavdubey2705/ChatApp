@@ -13,16 +13,15 @@ const createMessage = async(req, res) =>{
         res.status(500).json(error);          
     }
 };
+const getMessages = async (req, res) => {
+    const { chatId } = req.params;  // Fetches chatId from route parameters
 
-const getMessages = async(req, res) =>{
-    const { chatId } = req.params;
-
-    try{
-        const messages = await messageModel.find({chatId})
-    }catch(error){
+    try {
+        const messages = await messageModel.find({ chatId });  // Retrieves all messages for the chatId
+        res.status(200).json(messages);  // Sends the retrieved messages back to the client
+    } catch (error) {
         console.log(error);
-        res.status(500).json(error);
+        res.status(500).json(error);    // Sends an error status and message in case of failure
     }
 };
-
 module.exports = {createMessage, getMessages};

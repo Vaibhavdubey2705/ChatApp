@@ -18,9 +18,8 @@ const app=express();
 //CONFIGURE OUR .env file to use it here
 require("dotenv").config();
 
-//This line adds middleware to parse JSON bodies sent in the HTTP request. It enables the application to
-//handle JSON data easily.
-app.use(express.json());
+
+app.use(express.json());       //converts json data sent by clients to javascipt object so that express app can work with it
 //This line adds the CORS middleware to the Express application. It allows the server to respond to requests
 // from different origins (domains) other than its own, which is essential for enabling communication between 
 //the frontend and backend of a web application.

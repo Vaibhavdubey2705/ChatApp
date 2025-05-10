@@ -4,6 +4,7 @@ import { Container, Stack } from "react-bootstrap";
 import UserChat from "../components/chat/UserChat";
 import { AuthContext } from "../components/context/AuthContext";
 import PotentialChats from "../components/chat/PotentialChats";
+import ChatBox from "../components/chat/ChatBox";
 
 const Chat = () => {
     
@@ -12,12 +13,11 @@ const Chat = () => {
       isUserChatsLoading,
       updateCurrentChat
     } = useContext(ChatContext);
-    console.log("UserChats", userChats);
   
     return ( 
       <Container>
        <PotentialChats />
-       {userChats && userChats.length > 0 ? (
+       {userChats?.length < 1 ? null: (
         <Stack direction="horizontal" gap = {4} className="align-items-start">
           <Stack className="messages-box flex-grow-0 pe-3" gap={3}>              {/*the message-box is a custom styles defined in index.css */}
              {isUserChatsLoading && <p>Loading Chats...</p>}
@@ -29,11 +29,9 @@ const Chat = () => {
                )
              })}
           </Stack>        
-          <p>ChatBox</p>
+          <ChatBox />
         </Stack>
-      ) : (
-        <p>No Chats Available</p>
-      )}
+      ) }
     </Container> 
     );
 }
